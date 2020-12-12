@@ -1,0 +1,81 @@
+﻿<div class="table-responsive mt-2">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>№</th>
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Release Date</th>
+                <th>Main Developer</th>
+                <th>Country</th>
+                <th>Kirill's points</th>
+                <th>Rating Platform</th>
+            </tr>
+        </thead>
+
+        <tbody style="background-color: darkblue; color: azure">
+            @foreach (var item in Games)
+            {
+                <tr>
+                    <td>@IncrementIterator()</td>
+                    <td>@item.Title</td>
+                    <td>@item.Genre</td>
+                    <td>@item.ReleaseDate.ToString("dd.MM.yyyy")</td>
+                    <td>@item.MainDeveloper</td>
+                    <td>
+                        @if (item.Country == Country.USA)
+                        {
+                            <img style="height:25px; width:50px" src="/css/images/usa.jpg" />
+                        }
+                        else if (item.Country == Country.GB)
+                        {
+                            <img style="height:25px; width:50px" src="/css/images/gb.jpg" />
+                        }
+                        else if (item.Country == Country.Sweden)
+                        {
+                            <img style="height:25px; width:50px" src="/css/images/sweden.jpg" />
+                        }
+                        else if (item.Country == Country.Canada)
+                        {
+                            <img style="height:25px; width:50px" src="/css/images/canada.jpg" />
+                        }
+                        else if (item.Country == Country.Czhech)
+                        {
+                            <img style="height:25px; width:50px" src="/css/images/czech.png" />
+                        }
+                        else if (item.Country == Country.Ukraine)
+                        {
+                            <img style="height:25px; width:50px" src="/css/images/ukraine.jpg" />
+                        }
+                        else if (item.Country == Country.Poland)
+                        {
+                            <img style="height:25px; width:50px" src="/css/images/poland.png" />
+                        }
+                        else if (item.Country == Country.France)
+                        {
+                            <img style="height:25px; width:50px" src="/css/images/france.png" />
+                        }
+                    </td>
+                    <td class="pl-5">@item.KirillsPoints</td>
+                    <td>@item.Platform</td>
+                </tr>
+                @if (iter == Games.Count())
+                {
+                    iter = 0;
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+
+@code {
+    private int iter = 0;
+
+    private int IncrementIterator()
+    {
+        return ++iter;
+    }
+
+    [Parameter] public IEnumerable<Game> Games { get; set; }
+}

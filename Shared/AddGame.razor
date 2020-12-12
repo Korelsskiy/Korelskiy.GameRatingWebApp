@@ -1,0 +1,93 @@
+﻿<div class="card alert alert-primary col-6 m-auto">
+    <div class="card-header text-center">
+        <h3>Adding Game</h3>
+    </div>
+    <div class="card-body text-center">
+        <EditForm Model="@game">
+            <p>
+                <label>
+                    Title:
+                    <InputText @bind-Value="game.Title" />
+                </label>
+            </p>
+
+            <p>
+                <label>
+                    Genre:
+                    <InputText @bind-Value="game.Genre" />
+                </label>
+            </p>
+
+            <p>
+                <label>
+                    Date:
+                    <InputDate @bind-Value="game.ReleaseDate" />
+                </label>
+            </p>
+
+            <p>
+                <label>
+                    Main Developer:
+                    <InputText @bind-Value="game.MainDeveloper" />
+                </label>
+            </p>
+
+            <p>
+                <label>
+                    Country:
+                    <InputSelect @bind-Value="game.Country">
+                        <option value="">Select Country...</option>
+                        <option value="@Country.USA">USA</option>
+                        <option value="@Country.Canada">Canada</option>
+                        <option value="@Country.Czhech">Czech</option>
+                        <option value="@Country.GB">Great Britain</option>
+                        <option value="@Country.Sweden">Sweden</option>
+                        <option value="@Country.Ukraine">Ukraine</option>
+                        <option value="@Country.Poland">Poland</option>
+                        <option value="@Country.France">France</option>
+                    </InputSelect>
+                </label>
+            </p>
+
+                <label>
+                    First coefficient:
+                    <InputNumber @bind-Value="firstCoeff" />
+                </label>
+                <label>
+                    Second coefficient:
+                    <InputNumber @bind-Value="secondCoeff" />
+                </label>
+
+            <p>
+                <label>
+                    Rating Platform:
+                    <InputSelect @bind-Value="game.Platform">
+                        <option value="">Select Platform...</option>
+                        <option value="@Platform.PC">PC</option>
+                        <option value="@Platform.PS3">PS3</option>
+                        <option value="@Platform.Xbox360">Xbox 360</option>
+                    </InputSelect>
+                </label>
+            </p>
+
+            <button @onclick="(() => AddGameToList(firstCoeff, secondCoeff))">Submit</button>
+        </EditForm>
+    </div>
+</div>
+
+
+@code {
+    private float firstCoeff;
+    private int secondCoeff;
+    private Game game = new Game();
+    [Parameter] public EventCallback<Game> AddNewGame { get; set; }
+
+    private void AddGameToList(float first, int second)
+    {
+        game.KirillsPoints = Formula.Extension(first, second);
+        AddNewGame.InvokeAsync(game);
+        game = new Game();
+    }
+
+}
+

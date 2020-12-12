@@ -1,0 +1,44 @@
+﻿@inject Korelskiy.NextBlazor.Repository.IProductPepository repository
+@page "/"
+
+    
+     <input type="number" @bind="deletedItem"/>
+     <button @onclick="(() => DeleteGame(deletedItem))"/>
+    
+    <AddGame AddNewGame="AddGame"/>
+
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-info" @onclick="RatingSort">Sort by rating</button>
+        </div>
+    </div>
+
+    <NewGameTable Games="games" />
+
+    @code{
+        private int deletedItem = 0;
+        private IEnumerable<Game> games = new List<Game>();
+
+        private MockGamesRepository Mock = new MockGamesRepository();
+
+        private void RatingSort()
+        {
+            games = games.OrderByDescending(x => x.KirillsPoints).ToList();
+        }
+
+        protected override void OnInitialized()
+        {
+            games = repository.GetAllGames();
+        }
+
+        private void AddGame(Game game)
+        {
+            repository.AddNewGame(game);
+            games = repository.GetAllGames();
+        }
+
+        private void DeleteGame(int id)
+        {
+            repository.DeleteGame(id);
+        }
+    }
